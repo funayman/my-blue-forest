@@ -1,0 +1,61 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>My Blue Forest</title>
+
+  <script src="/assets/lib/js/angular.min.js"></script>
+  <script src="/assets/lib/js/angular-sanitize.min.js"></script>
+  <script src="/assets/lib/js/angular-ui-router.min.js"></script>
+  <script src="/assets/lib/js/ui-bootstrap-tpls.js"></script>
+  <script src="/assets/lib/js/marked.js"></script>
+  <script src="/assets/lib/js/angular-marked.js"></script>
+  <script src="/assets/lib/js/angular-flash.min.js"></script>
+  <script src="/assets/lib/js/ng-tags-input.min.js"></script>
+  <script src="/assets/js/my-blue-forest.js"></script>
+
+  <link rel="stylesheet" href="/assets/lib/css/bootstrap.min.css">
+  <link rel="stylesheet" href="/assets/lib/css/open-iconic-bootstrap.min.css">
+  <link rel="stylesheet" href="/assets/lib/css/ng-tags-input.min.css">
+  <link rel="stylesheet" href="/assets/lib/css/ng-tags-input.bootstrap.min.css">
+  <link rel="stylesheet" href="/assets/css/main.min.css">
+</head>
+
+<body ng-app="myBlueForest">
+  <nav class="navbar navbar-default navbar-static-top" ng-cloak>
+    <div class="container">
+      <div class="navbar-header">
+        <button type="button" class="navbar-toggle" ng-init="isNavCollapsed=true" ng-click="isNavCollapsed = !isNavCollapsed">
+          <span class="sr-only">Toggle navigation</span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+        </button>
+        <a ui-sref="index" class="navbar-brand">My Blue Forest</a>
+      </div>
+
+      <div class="collapse navbar-collapse" uib-collapse="isNavCollapsed" ng-class="!navCollapsed && 'in'">
+        <ul class="nav navbar-nav">
+          <li><a ui-sref="contribute">New Post</a></li>
+          <li ng-show="authenticated"><a ui-sref="following">Followed Posts</a></li>
+        </ul>
+
+        <ul class="nav navbar-nav navbar-right">
+          <li><p class="navbar-btn"><a ui-sref="register" ng-show="!authenticated" class="btn btn-success"><span class="glyphicon glyphicon-sunglasses" aria-hidden="true"></span> Register</a></p></li>
+          <li><p class="navbar-btn"><a ui-sref="login" ng-show="!authenticated" class="btn btn-primary "><span class="oi oi-account-login"></span> Login</a></p></li>
+          <li><p class="navbar-btn"><a ui-sref="me" class="user name" ng-show="authenticated">{{ user }} <span class="oi oi-person user icon"></span></a></p></li>
+          <li><p class="navbar-btn"><a ui-sref="logout" ng-show="authenticated" class="btn btn-danger "><span class="oi oi-account-logout"></span> Logout</a></p></li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+
+  <div id="sun"></div>
+  <main class="container">
+    <flash-message></flash-message>
+    <ui-view></ui-view>
+  </main>
+</body>
+</html>

@@ -1,0 +1,77 @@
+<section>
+  <form name="newPostForm" class="form-horizontal"
+        ng-submit="ctrl.processForm()"
+        ng-model-options="{updateOn:'default blur', debounce:{default:500, blur:0}}">
+    <div class="form-group"
+         ng-class="{'has-error': newPostForm.title.$dirty && newPostForm.title.$invalid}">
+      <label for="title" class="col-sm-2 control-label">Heading</label>
+      <div class="col-sm-10">
+        <input type="text" class="form-control" placeholder="good mechanic in tsugura area?" name="title"
+               ng-model="ctrl.formData.title"
+               ng-minlength="3"
+               ng-maxlength="32"
+               required />
+        <p class="help-block"
+           ng-show="newPostForm.title.$dirty && newPostForm.title.$error.required">This field is required</p>
+        <p class="help-block"
+           ng-show="newPostForm.title.$dirty && (newPostForm.title.$error.minlength || newPostForm.title.$error.maxlength)">Title must be between 3 and 32 charaters</p>
+      </div>
+    </div>
+
+    <div class="form-group">
+      <label for="description" class="col-sm-2 control-label">Type of Post</label>
+      <div class="col-sm-10">
+        <select class="form-control"
+                ng-model="ctrl.formData.type"
+                ng-options="type.value as type.name for type in ctrl.postTypes">
+        </select>
+      </div>
+    </div>
+
+    <div class="form-group"
+         ng-class="{'has-error': newPostForm.description.$dirty && newPostForm.description.$invalid}">
+      <label for="description" class="col-sm-2 control-label">Additional Details</label>
+      <div class="col-sm-10">
+        <textarea rows="5" class="form-control" name="description"
+                  ng-model="ctrl.formData.description"
+                  ng-required="ctrl.formData.type != 'QUESTION'">
+        </textarea>
+        <p class="help-block"
+           ng-show="newPostForm.description.$dirty && newPostForm.description.$error.required">This field is required</p>
+        <br/>
+        <span ng-click="ctrl.showPreview = !ctrl.showPreview" class="btn btn-primary btn-block">Preview</span><br/>
+        <div ng-show="ctrl.showPreview" marked="ctrl.formData.description" class="well"></div>
+      </div>
+    </div>
+
+    <div class="form-group" ng-class="{'has-warning' : newPostForm.file.$invalid && newPostForm.file.$dirty}">
+      <label for="image" class="col-sm-2 control-label">Image</label>
+      <div class="col-sm-10">
+        <input name="file" class="form-control" type="file" file-model="ctrl.fileToUpload" accept="image/*"/>
+        <div ng-show="ctrl.asset">
+          <br/>
+          <img class="img-responsive center-block" src="{{ctrl.asset}}" />
+        </div>
+      </div>
+    </div>
+
+    <div class="form-group" ng-class="{'has-error': newPostForm.tags.$dirty && ctrl.formData.tags.length==0}">
+      <label for="tags" class="col-sm-2 control-label">Tags</label>
+      <div class="col-sm-10">
+        <tags-input add-on-space="true"
+                    display-property="name"
+                    min-length="3"
+                    name="tags"
+                    ng-model="ctrl.formData.tags"
+                    ng-minlength="1">
+          <auto-complete source="ctrl.loadTags($query)" load-on-focus="true" min-length="1"></auto-complete>
+        </tags-input>
+        <p class="help-block"
+           ng-show="ctrl.formData.tags.length == 0">At least one tag is required</p>
+      </div>
+    </div>
+
+    <button type="submit" class="btn btn-lg btn-success btn-block" ng-disabled="newPostForm.$invalid || ctrl.formData.tags.length==0">確認（SUBMIT ME）</button>
+  </form>
+
+</section>

@@ -1,0 +1,77 @@
+<section id="posts">
+  <h1>{{ ctrl.title }}</h1>
+  <div class="row">
+    <div class="col-xs-12">
+      <form class="form-inline">
+        <div class="form-group">
+          <div class="input-group">
+            <div class="input-group-addon"><span class="glyphicon glyphicon-search" aria-hidden="true"></span></span></div>
+            <input type="text" class="form-control" placeholder="filter posts" ng-model="ctrl.searchPost">
+          </div>
+        </div>
+
+        <div class="form-group">
+          <div class="btn-group" uib-dropdown>
+            <button type="button" id="postTypeBtn" class="btn btn-primary" uib-dropdown-toggle ng-disabled="disabled">Post Type <span class="caret"></span></button>
+            <ul class="dropdown-menu" uib-dropdown-menu role="menu" aria-labelledby="postTypeBtn">
+              <li role="menuitem"><a ng-click="ctrl.filterType = ''">All</a></li>
+              <li class="divider"></li>
+              <li role="menuitem"><a ng-click="ctrl.filterType = 'ADVICE'">Advice</a></li>
+              <li role="menuitem"><a ng-click="ctrl.filterType = 'QUESTION'">Question</a></li>
+              <li role="menuitem"><a ng-click="ctrl.filterType = 'REVIEW'">Review</a></li>
+              <li role="menuitem"><a ng-click="ctrl.filterType = 'GENERAL'">General</a></li>
+            </ul>
+          </div> <!-- button dropdown -->
+
+          <div class="btn-group" uib-dropdown>
+            <button type="button" id="orderBtn" class="btn btn-primary" uib-dropdown-toggle ng-disabled="disabled">Order By <span class="caret"></span></button>
+            <ul class="dropdown-menu" uib-dropdown-menu role="menu" aria-labelledby="orderBtn">
+              <li role="menuitem"><a ng-click="ctrl.sortType = 'dateCreated'">Most Recent</a></li>
+              <li role="menuitem"><a ng-click="ctrl.sortType = 'title'">Title</a></li>
+              <li class="divider"></li>
+              <li role="menuitem"><a ng-click="ctrl.sortReverse = !ctrl.sortReverse">Descending | Ascending</a></li>
+            </ul>
+          </div> <!-- button dropdown -->
+        </div> <!-- form-group -->
+      </form> <!-- filter-form -->
+    </div>
+  </div>
+
+
+  <p ng-show="ctrl.posts.length == 0">{{ ctrl.emptyMsg }}</p>
+
+  <div class="row">
+  <div class="col-xs-6 col-md-3" ng-repeat-start="post in ctrl.posts | orderBy:ctrl.sortType:ctrl.sortReverse | filter:ctrl.filterType | filter:ctrl.searchPost">
+    <div class="post">
+      <p><a class="user-link" ui-sref="user({username:post.owner.username})">{{post.owner.username}}</a> <span class="pull-right">{{ post.dateCreated | elapsed }}</span></p>
+      <h3 class="text-center">{{post.title}}</h3>
+      <a ui-sref="post({pid:post.id})"><img src="{{post.assetUrl}}" class="img-responsive" /></a>
+      <p><span ng-bind-html="post.description"></span>...<a ui-sref="post({pid:post.id})" class="enticing"><strong>read more</strong></a></p>
+      <div class="btn-group btn-group-justified" role="group">
+        <div class="btn-group" role="group">
+          <button type="button" class="btn btn-sm"
+                  ng-class="post.following.is ? 'btn-success' : 'btn-basic'"
+                  ng-click="$parent.ctrl.doFollowing(post.id)">{{post.following.count}} <span class="oi oi-plus"></span></button>
+        </div>
+        <div class="btn-group" role="group">
+          <button type="button" class="btn btn-sm btn-warning">{{post.commentsCount}} <span class="oi oi-excerpt"></span></button>
+        </div>
+        <div class="btn-group" role="group">
+          <button type="button" class="btn btn-sm btn-primary"
+                  ng-click="$parent.ctrl.doLike(post.id)">{{post.likesCount}} <span class="oi oi-thumb-up"></span></button>
+        </div>
+      </div>
+
+      <div class="rating">
+        <p ng-show="post.rating" class="text-center">{{post.rating | number:2}}
+          <span ng-repeat="n in ctrl.getStarRange(post.rating)" class="oi oi-star star"></span>
+        </p>
+        <p ng-show="!post.rating" class="text-center">no rating available</p>
+      </div>
+    </div>
+  </div>
+  <div class="visible-xs-block visible-sm-block clearfix" ng-if="($index+1)%2==0"></div>
+  <div class="hidden-xs hidden-sm clearfix" ng-if="($index+1)%4==0"></div>
+  <div class="clearfix" ng-if="($last)"></div>
+  <div ng-repeat-end=""></div>
+  </div> </section>

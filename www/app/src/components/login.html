@@ -1,0 +1,14 @@
+<section class="container">
+  <h2>Login</h2>
+  <form name="loginForm" class="form-inline">
+    <div class="form-group">
+      <label for="username">Username</label>
+      <input ng-model="ctrl.cred.u" type="text" class="form-control" id="username" name="u" />
+    </div>
+    <div class="form-group">
+      <label for="password">Password</label>
+      <input ng-model="ctrl.cred.p" type="password" class="form-control" id="password" name="p" />
+    </div>
+    <button ng-click="ctrl.submitLogin()" class="btn btn-primary">Login!~</button>
+  </form>
+</section>

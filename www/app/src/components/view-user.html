@@ -1,0 +1,36 @@
+<section id="user">
+
+  <div class="row">
+    <div class="col-xs-12 text-area">
+      <h2>User Details: {{ctrl.user.username}}</h2>
+    </div>
+    <div class="col-xs-12 col-sm-6">
+      <img class="img-responsive" src="{{ctrl.locationImg()}}" />
+    </div>
+    <div class="col-xs-12 col-sm-6 text-area">
+      <h4>Location: {{ctrl.user.region.city|titlecase}}, Aomori</h4>
+      <h4>Joined: {{ctrl.user.dateCreated|elapsed}}</h4>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col-xs-12 text-area">
+
+        <h3>Posts</h3>
+        <p ng-show="ctrl.posts.length==0">{{ctrl.user.username}} has not made any posts</p>
+        <div class="media" ng-repeat="post in ctrl.posts">
+          <div class="media-left">
+            <a ui-sref="post({pid:post.id})">
+              <img class="media-object" src="{{post.assetUrl}}" alt="post-img">
+            </a>
+          </div>
+          <div class="media-body">
+            <h4 class="media-heading">{{post.title}}</h4>
+            <p><span ng-bind-html="post.description"></span>...<a ui-sref="post({pid:post.id})">click to read more</a></p>
+          </div>
+        </div>
+
+    </div>
+  </div>
+
+</section>

@@ -1,0 +1,105 @@
+<section id="post">
+
+  <div class="row">
+    <div class="col-xs-12">
+      <h1>{{ ctrl.post.type | titlecase }}: {{ ctrl.post.title }}</h1>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col-xs-12 col-sm-6 col-lg-3">
+      <img ng-click="ctrl.showImage()" src="{{ ctrl.post.assetUrl }}" alt="post-img" class="img-responsive" />
+      <div class="row admin-btn-row" ng-show="ctrl.isEditable">
+        <div class="col-xs-6">
+          <a ui-sref="postEdit({pid:ctrl.post.id})" class="btn btn-warning onehundo">EDIT</a>
+        </div>
+        <div class="col-xs-6">
+          <button ng-click="ctrl.deletePost(ctrl.post.id)" class="btn btn-danger onehundo">DELETE</button>
+        </div>
+      </div>
+    </div>
+
+
+
+    <div class="col-xs-12 col-sm-6 col-lg-9">
+
+      <div class="content-wrapper well">
+        <div class="rating pull-right">
+            <p class="text-center">{{ctrl.post.rating.average | number:2}}</p>
+            <span ng-repeat="n in ctrl.getStarRange()" class="oi oi-star star"></span>
+            <p class="text-center">rating based on {{ctrl.post.rating.users}} user{{(ctrl.post.rating.users != 1) ? 's' : ''}}</p>
+        </div>
+        <div marked="ctrl.post.description"> </div>
+        <div class="tags">
+          <p> <a ng-repeat="tag in ctrl.post.tags" ui-sref="tagPosts({name:tag.name})"> {{ tag.name }} </a> </p>
+        </div>
+        <p class="details">
+          Created on {{ ctrl.post.dateCreated | date:'yyyy-MM-dd @ HH:mm' }} and last updated on {{ ctrl.post.dateModified | date:'yyyy-MM-dd @ HH:mm' }} by <a class="user-link" ui-sref="user({username:ctrl.post.owner.username})">{{ ctrl.post.owner.username }}</a>
+        </p>
+      </div> <!-- /content-wrapper well -->
+
+      <div class="row" style="padding-bottom: 10px">
+        <div class="col-xs-12">
+          <div class="btn-group btn-group-justified" role="group">
+
+            <div class="btn-group" role="group">
+              <button type="button" ng-show="authenticated" ng-click="ctrl.doFollowing()" class="btn" ng-class="ctrl.isFollowing ? 'btn-success' : 'btn-basic'">
+                <span class="oi oi-plus"></span> Follow{{ ctrl.isFollowing ? 'ing (click to stop)' : '' }}
+              </button>
+            </div>
+
+            <div class="btn-group" role="group">
+              <button type="button" ng-show="authenticated" ng-click="ctrl.doRating()" class="btn btn-warning">
+                <span class="oi oi-star"></span> Rate
+              </button>
+            </div>
+
+            <div class="btn-group" role="group">
+              <button type="button" ng-show="authenticated" ng-click="ctrl.doLike()" class="btn btn-primary">
+                <span class="oi oi-thumb-up"></span> {{ ctrl.doesLike ? '(Un)' : '' }}Like
+              </button>
+            </div>
+
+          </div>
+        </div>
+      </div>
+
+    </div> <!-- /col-xs-12 col-sm-6 col-lg-9 -->
+  </div> <!-- /row -->
+</section>
+
+<section id="comments">
+  <div class="row">
+    <div class="col-xs-12">
+      <h3>Comments</h3>
+      <div class="well" ng-repeat="comment in ctrl.post.comments | orderBy:date:true">
+        <div class="row vcenter">
+          <div class="col-xs-2">
+            <h4><a ui-sref="user({username:comment.owner.username})">{{ comment.owner.username }}</a> said:</h4>
+          </div> <!-- /col-xs-2 -->
+          <div class="col-xs-10">
+            <button ng-show="comment.owner.username == user" class="btn btn-danger pull-right" ng-click="ctrl.deleteComment(ctrl.post.id, comment.id)">DELETE</button>
+            <p ng-bind-html="comment.details"></p>
+          </div> <!-- /col-xs-10 -->
+        </div> <!-- /row -->
+      </div>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col-xs-12 new-comment">
+      <h3>Join the discussion!</h3>
+      <form ng-show="authenticated" ng-submit="ctrl.postComment()" class="form" name="ctrl.commentForm">
+        <div class="form-group" ng-class="{'has-error': ctrl.commentForm.commentBody.$dirty && ctrl.commentForm.commentBody.$invalid}">
+          <p class="help-block"
+             ng-show="ctrl.commentForm.commentBody.$dirty && ctrl.commentForm.commentBody.$error.required">This field is required</p>
+          <textarea rows="2" class="form-control" name="commentBody" placeholder="Enter your comment..."
+                    ng-model="ctrl.newComment.details"
+                    required></textarea>
+          <button type="submit" class="btn btn-block btn-success" ng-disabled="ctrl.commentForm.$invalid">Comment</button>
+        </div>
+      </form>
+      <p ng-show="!authenticated">You must be <a ui-sref="login">logged in</a> to comment...</p>
+    </div> <!-- /col-xs-12 -->
+  </div> <!-- /row -->
+</section>

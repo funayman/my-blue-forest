@@ -1,0 +1,25 @@
+<section id="project">
+  <h2>My Blue Forest!</h2>
+
+  <h3>Overview</h3>
+  <p>This website will focus on the people of Aomori Prefecture and the expats participating in the JET Program.</p>
+  <p>The way cities are designed in Aomori have all the housing and businesses jamed together in one area. It sometimes makes it hard to leave your area and explore, but each city/town/village has something to offer.
+    There is also a lot of turnover each year in the JET Program.
+    Many people leaving home for the first time and coming to Japan for the first time.
+    Having a community who understands what you are going through and give you support is essential.
+    Thats where My Blue Forest comes into play.
+  <p>My idea has changed between assignments. Before the whole site was focused around buy/selling items. Now it it will be more about interacting with the community.</p>
+  <p>Users can create posts under the following general categories: question, review, advice. Some examples are:<ul><li>Question: How to Obtain a Japanese Credit Card</li><li>Advice: Bubble Wrapping Windows Really Keeps in the Heat</li><li>Review: Best Miso-Curry Ramen in Aomori</li></ul></p>
+  <p>Users will be able to add multiple tags to each post.
+    Similar to hashtags on Instagram and Twitter, others can search by these tags to see (for example) questions, reviews and/or advice about "snow".
+    Each post will have a rating that users can vote to show how helpful each post is. They will also be able to provide feedback and support through comments.
+    In regard to Questions, the original poster will have the opportunity to select an "answer" comment, that will be displayed at the top of the comments so other users wont have to go around looking for the correct answer. This will be similar to StackOverflow but without the ability to rank individual comments.
+  </p>
+
+  <h3>Development</h3>
+  <p>The application is broken up into four Dockerized components:<ul><li>Database</li><li>API</li><li>RSS Feeds</li><li>Front End</li></ul></p>
+  <p><strong>Database</strong>: Maria DB. The schema is built in the container and mapped to entities in the API.<br/>
+  <strong>API</strong>: Written in Java using Spring Boot and the Spring Suite. Manages everything on the backend and handles requests from the front end.<br/>
+  <strong>RSS</strong>: Also written in Java to connect to the database and provide ATOM and RSS feeds (even if the API is down).<br/>
+  <strong>Front End</strong>: Written in HTML/CSS and the AngularJS framework.</p>
+</section>

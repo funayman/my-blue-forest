@@ -1,0 +1,13 @@
+<div class="modal-body">
+  <h2>Rating</h2>
+  <p class="text-center">
+    <button type="button" class="btn btn-lg btn-star" ng-click="modalOptions.rate(5)">5</button>
+    <button type="button" class="btn btn-lg btn-star" ng-click="modalOptions.rate(4)">4</button>
+    <button type="button" class="btn btn-lg btn-star" ng-click="modalOptions.rate(3)">3</button>
+    <button type="button" class="btn btn-lg btn-star" ng-click="modalOptions.rate(2)">2</button>
+    <button type="button" class="btn btn-lg btn-star" ng-click="modalOptions.rate(1)">1</button>
+  </p>
+</div>
+<div class="modal-footer">
+    <button type="button" class="btn btn-warning" data-ng-click="modalOptions.close()">{{modalOptions.text.cancel}}</button>
+</div>

@@ -1,0 +1,28 @@
+{
+  "name": "my-blue-forest",
+  "version": "0.1.0",
+  "description": "tips and tricks for surviving in aomori",
+  "main": "index.js",
+  "author": "DD <dd16abc@herts.ac.uk>",
+  "license": "Apache-2.0",
+  "private": true,
+  "dependencies": {
+    "@uirouter/angularjs": "^1.0.10",
+    "angular": "^1.6.6",
+    "angular-flash-alert": "^2.5.0",
+    "angular-marked": "^1.2.2",
+    "angular-sanitize": "^1.6.8",
+    "angular-ui-bootstrap": "^2.5.6",
+    "bootstrap": "^3.3.7",
+    "ng-tags-input": "^3.2.0",
+    "open-iconic": "^1.1.1"
+  },
+  "devDependencies": {
+    "grunt": "^1.0.1",
+    "grunt-contrib-concat": "^1.0.1",
+    "grunt-contrib-copy": "^1.0.0",
+    "grunt-contrib-jshint": "^1.1.0",
+    "grunt-contrib-less": "^1.4.1",
+    "grunt-contrib-uglify": "^3.1.0"
+  }
+}

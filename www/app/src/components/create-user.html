@@ -1,0 +1,87 @@
+<section class="container">
+  <h2>Registration</h2>
+  <form name="ctrl.registrationForm" class="form"
+        ng-model-options="{updateOn:'default blur', debounce:{default:500, blur:0}}">
+
+    <!-- username -->
+    <div class="form-group" ng-class="{'has-error': ctrl.registrationForm.username.$dirty && (ctrl.registrationForm.username.$invalid || ctrl.reg.err.username) }">
+      <p class="help-block" ng-show="ctrl.registrationForm.username.$dirty && ctrl.registrationForm.username.$error.required">This field is required</p>
+      <p class="help-block" ng-show="ctrl.registrationForm.username.$error.pattern">Sorry but special characters are a no no. Letters and numbers only please.</p>
+      <p class="help-block" ng-show="ctrl.registrationForm.username.$dirty && (ctrl.registrationForm.username.$error.minlength || ctrl.registrationForm.username.$error.maxlength)">Username must be between 3 and 16 charaters</p>
+      <p class="help-block" ng-show="ctrl.reg.err.username">{{ctrl.reg.err.username}}</p>
+      <input type="text" class="form-control" id="username" name="username" placeholder="Username"
+             ng-model="ctrl.reg.username"
+             ng-trim="false"
+             ng-pattern="/^[a-zA-Z0-9]*$/"
+             ng-minlength="3"
+             ng-maxlength="16"
+             required />
+    </div>
+
+    <!-- password -->
+    <div class="form-group"
+         ng-class="{'has-error':ctrl.registrationForm.password.$dirty && (ctrl.registrationForm.password.$invalid || ctrl.reg.err.password)}">
+      <p class="help-block" ng-show="ctrl.registrationForm.password.$dirty && ctrl.registrationForm.password.$error.required">This field is required</p>
+      <p class="help-block" ng-show="ctrl.registrationForm.password.$dirty && ctrl.registrationForm.password.$error.minlength">Password must be at least 8 characters</p>
+      <p class="help-block" ng-show="ctrl.reg.err.password">{{ctrl.reg.err.password}}</p>
+      <input type="password" class="form-control" id="password" name="password" placeholder="Password"
+             ng-model="ctrl.reg.password"
+             ng-minlength="8"
+             required />
+    </div>
+
+    <!-- password confirmation -->
+    <div class="form-group"
+         ng-class="{'has-error': ctrl.registrationForm.passconf.$dirty && (ctrl.registrationForm.passconf.$invalid || ctrl.reg.err.passconf)}">
+      <p class="help-block" ng-show="ctrl.registrationForm.passconf.$dirty && ctrl.registrationForm.passconf.$error.required">This field is required</p>
+      <p class="help-block" ng-show="ctrl.registrationForm.passconf.$dirty && ctrl.registrationForm.passconf.$error.pwmatch">Passwords do not match</p>
+      <p class="help-block" ng-show="ctrl.reg.err.passconf">{{ctrl.reg.err.passconf}}</p>
+      <input type="password" class="form-control" id="passconf" name="passconf" placeholder="Password Confirmation"
+             ng-model="ctrl.reg.passconf"
+             pw-check="{{ctrl.reg.password}}"
+             required />
+    </div>
+
+    <!-- region -->
+    <div class="form-inline"
+         ng-class="{'has-error': (ctrl.registrationForm.yuu.$dirty || ctrl.registrationForm.bin.$dirty) && (ctrl.registrationForm.yuu.$invalid || ctrl.registrationForm.bin.$invalid)}">
+      <p class="help-block"
+         ng-show="(ctrl.registrationForm.yuu.$dirty && ctrl.registrationForm.yuu.$error.required) || (ctrl.registrationForm.bin.$dirty && ctrl.registrationForm.bin.$error.required)">Postal Code is required</p>
+      <p class="help-block"
+         ng-show="(ctrl.registrationForm.yuu.$dirty && (ctrl.registrationForm.yuu.$error.minlength || ctrl.registrationForm.yuu.$error.maxlength)) || (ctrl.registrationForm.bin.$dirty && (ctrl.registrationForm.bin.$error.minlength || ctrl.registrationForm.bin.$error.maxlength))">
+         Postal Code must be a three and four digit only</p>
+      <p class="help-block"
+         ng-show="ctrl.registrationForm.yuu.$dirty && ctrl.registrationForm.yuu.$error.validRegion">No area with {{ctrl.reg.region.yuu}} found</p>
+      <p class="help-block"
+         ng-show="ctrl.registrationForm.yuu.$dirty && ctrl.registrationForm.bin.$dirty && ctrl.registrationForm.bin.$error.validRegion">No area with {{ctrl.reg.region.yuu}}-{{ctrl.reg.region.bin}} found</p>
+
+      <div class="form-group"
+         ng-class="{'has-error': ctrl.registrationForm.yuu.$dirty && ctrl.registrationForm.yuu.$invalid}">
+        <label for="yuu">Post Code 〒</label>
+        <input type="text" class="form-control" id="yuu" name="yuu" placeholder="033"
+               ng-model="ctrl.reg.region.yuu"
+               ng-change="ctrl.onYuuChange()"
+               ng-minlength="3"
+               ng-maxlength="3"
+               validRegion
+               required />
+      </div>
+      <div class="form-group"
+         ng-class="{'has-error': ctrl.registrationForm.bin.$dirty && (ctrl.registrationForm.bin.$invalid)}">
+        <label for="bin">ー</label>
+        <input type="text" class="form-control" id="bin" name="bin" placeholder="0021"
+               ng-model="ctrl.reg.region.bin"
+               ng-change="ctrl.onBinChange()"
+               ng-minlength="4"
+               ng-maxlength="4"
+               validRegion
+               required />
+      </div>
+    </div>
+
+    <!-- submit -->
+    <button class="btn btn-lg btn-primary btn-block"
+            ng-disabled="ctrl.registrationForm.$invalid"
+            ng-click="ctrl.submitRegistration()"> Register!~ </button>
+  </form>
+</section>

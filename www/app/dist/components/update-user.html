@@ -1,0 +1,81 @@
+<section id="user">
+  <flash-message name="flash-fixed"></flash-message>
+  <div class="row">
+    <div class="col-xs-12">
+      <h2 class="text-area">User Settings {{ctrl.user.username}}</h2>
+    </div>
+    <div class="col-xs-12 col-sm-6">
+      <img class="img-responsive" src="{{ctrl.locationImg()}}" />
+    </div>
+    <div class="col-xs-12 col-sm-6 text-area">
+      <h4>Location: {{ctrl.user.region.city|titlecase}}, Aomori</h4>
+      <h4>Joined: {{ctrl.user.dateCreated|elapsed}}</h4>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col-xs-12">
+
+      <div class="text-area">
+        <h3>Posts</h3>
+        <p ng-show="ctrl.posts.length == 0">You haven't posted anything</p>
+        <div class="media" ng-repeat="post in ctrl.posts">
+          <div class="media-left">
+            <a ui-sref="post({pid:post.id})">
+              <img class="media-object" src="{{post.assetUrl}}" alt="post-img">
+            </a>
+          </div>
+          <div class="media-body">
+            <h4 class="media-heading">{{post.title}}</h4>
+            <button class="btn btn-danger pull-right" ng-click="ctrl.deletePost(post.id)">DELETE</button>
+            <p><span ng-bind-html="post.description"></span>...<a ui-sref="post({pid:post.id})">click to read more</a></p>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col-xs-12">
+      <div class="text-area">
+        <h3>Change Password</h3>
+
+  <form name="ctrl.passForm" class="form"
+        ng-submit="ctrl.updatePassword()"
+        ng-model-options="{updateOn:'default blur', debounce:{default:500, blur:0}}">
+
+    <!-- password -->
+    <div class="form-group"
+         ng-class="{'has-error':ctrl.passForm.newpassword.$dirty && (ctrl.passForm.newpassword.$invalid || ctrl.reg.err.password)}">
+      <p class="help-block" ng-show="ctrl.passForm.newpassword.$dirty && ctrl.passForm.newpassword.$error.required">This field is required</p>
+      <p class="help-block" ng-show="ctrl.passForm.newpassword.$dirty && ctrl.passForm.newpassword.$error.minlength">Password must be at least 8 characters</p>
+      <label for="newpassword">New Password</label>
+      <input type="password" class="form-control" id="newpassword" name="newpassword" placeholder="Password"
+             ng-model="ctrl.new.password"
+             ng-minlength="8"
+             required />
+    </div>
+
+    <!-- password confirmation -->
+    <div class="form-group"
+         ng-class="{'has-error': ctrl.passForm.newpassconf.$dirty && (ctrl.passForm.newpassconf.$invalid || ctrl.reg.err.passconf)}">
+      <p class="help-block" ng-show="ctrl.passForm.newpassconf.$dirty && ctrl.passForm.newpassconf.$error.required">This field is required</p>
+      <p class="help-block" ng-show="ctrl.passForm.newpassconf.$dirty && ctrl.passForm.newpassconf.$error.pwmatch">Passwords do not match</p>
+      <p class="help-block" ng-show="ctrl.reg.err.passconf">{{ctrl.reg.err.passconf}}</p>
+      <label for="newpassword">New Password Confirmation</label>
+      <input type="password" class="form-control" id="newpassconf" name="newpassconf" placeholder="Password Confirmation"
+             ng-model="ctrl.new.passconf"
+             pw-check="{{ctrl.new.password}}"
+             required />
+    </div>
+
+    <button type="submit" class="btn btn-primary" ng-disabled="ctrl.passForm.$invalid">SUBMIT</button>
+
+  </form>
+
+      </div>
+    </div>
+  </div>
+
+</section>
